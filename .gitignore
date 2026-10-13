@@ -1,0 +1,7 @@
+/build/
+/dist/
+/tools/local/
+/MSXgl/projects/default_config.js
+/MSXgl/projects/template_msx2/out/
+/MSXgl/projects/template_msx2/emul/
+*.tmp

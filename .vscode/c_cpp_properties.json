@@ -1,0 +1,30 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "Bloodstrain MSX2 SDCC",
+      "compilerPath": "",
+      "includePath": [
+        "${workspaceFolder}",
+        "${workspaceFolder}\\include",
+        "${workspaceFolder}\\build\\generated",
+        "${workspaceFolder}\\MSXgl\\engine\\src",
+        "${workspaceFolder}\\MSXgl\\engine\\content"
+      ],
+      "defines": [
+        "TARGET=TARGET_DOS2",
+        "MSX_VERSION=MSX_2",
+        "ROM_SIZE=32",
+        "__z88dk_fastcall=",
+        "__preserves_regs(...)=",
+        "__sdcccall(x)=",
+        "__naked=",
+        "__at(x)=",
+        "__sfr=volatile unsigned char",
+        "__sfr16=volatile unsigned short"
+      ],
+      "cStandard": "c99",
+      "intelliSenseMode": "windows-gcc-x86"
+    }
+  ]
+}
