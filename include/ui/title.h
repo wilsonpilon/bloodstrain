@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 #pragma once
 
-void Title_Show(void);
+#include "core.h"
+
+u8 Title_Show(void);

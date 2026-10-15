@@ -19,7 +19,17 @@ As contribuições originais de Bloodstrain são disponibilizadas sob **GNU GPL 
 
 Módulos externos da biblioteca podem ter outras licenças. Ao incorporar novos players, fontes ou recursos, verificar os avisos específicos antes de vinculá-los; não presumir que todos têm a licença geral.
 
-## SDCC
+## ZX0
+
+A abertura usa o compressor ZX0 v2.2 no formato v2 e o descompressor
+`ZX0_UnpackToRAM` da MSXgl. Formato/algoritmo por Einar Saukas; decoder por
+Einar Saukas, Urusergi e colaboradores. O compressor é ferramenta de build,
+não integra o COM; seu aviso declara BSD-3. O aviso fornecido permite usar os
+descompressores inclusive comercialmente, exigindo crédito ao ZX0, registrado
+aqui. Veja [o aviso original](MSXgl/tools/compress/ZX0/license.txt).
+Os avisos dos fontes vinculados permanecem no SOURCE.zip.
+
+## SDCC — compilador
 
 [Small Device C Compiler](https://sdcc.sourceforge.net/), equipe SDCC e colaboradores. Compilador identificado localmente como 4.6.0. A distribuição traz `COPYING.txt`, `COPYING3.txt` e avisos de runtime. O compilador não integra o ZIP do jogo. Preservar os avisos da distribuição ao compartilhar a pasta de ferramentas.
 
@@ -47,6 +57,20 @@ Não redistribuídos. A mídia de DOS e as ROMs usadas em testes locais são dep
 
 ## Assets próprios e referências culturais
 
-Nenhuma arte ou música própria foi adicionada na versão fundadora. Registrar cada contribuição futura com autor, origem, licença e modificações.
+Na versão 1.1.5 foram adicionadas sete ilustrações originais, paleta e lettering
+de placas/título, gerados por [intro.js](assets/art/source/intro.js). Produzidos
+com assistência do Copilot a partir do roteiro e direção do criador, sob
+GPL-3.0-only, sem imagens, fontes ou músicas externas. O texto exibido em runtime
+continua usando a fonte da MSXgl, com seus avisos preservados.
+
+Na 1.1.8, a composição "Madrugada de Ferrugem", partitura, arranjos PSG/FM/SCC
+e ondas SCC são contribuições originais assistidas pelo Copilot, sob
+GPL-3.0-only. Não foram usados músicas, samples ou partituras de terceiros.
+Os instrumentos FM de fábrica pertencem ao próprio YM2413; o acesso aos chips
+e sua detecção usam os módulos PSG, MSX-Music e SCC da MSXgl.
+
+A referência a loading screens do ZX Spectrum e a filmes B dos anos 1980 é
+estilística: retículas, montagem de capa e cores contrastantes, sem reproduzir
+composições, personagens ou logotipos de terceiros.
 
 Raccoon City (Resident Evil) e Alexandria (The Walking Dead) são referências editoriais nos nomes de ciclos. Não há afiliação ou endosso, nem uso de arte, música, logotipos ou roteiro dessas franquias.

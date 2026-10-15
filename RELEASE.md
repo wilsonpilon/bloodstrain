@@ -123,6 +123,103 @@ Patch sem apelido próprio, pertencente ao ciclo Alexandria.
 - COM com 15698 bytes; DSK com 737280 bytes.
 - Hardware físico ainda pendente; warning upstream da MSXgl continua documentado.
 
-**Pacote recomendado:** `dist\Bloodstrain-1.1.4.zip`. Executável e DSK também estão em `dist\Bloodstrain-1.1.4`.
+Artefatos históricos: `dist\Bloodstrain-1.1.4.zip` e `dist\Bloodstrain-1.1.4`.
+
+### 1.1.5 — 2026-10-15
+
+Patch do ciclo Alexandria, sem novo apelido.
+
+- Roteiro original preservado e adaptação em Markdown por cenas.
+- Seis quadros narrativos e tela ilustrada de carregamento/título, com arte
+  original reproduzível, SCREEN 5 de 256 × 212 e paleta própria.
+- SPACE/ENTER avança e revê, S pula, ESC retorna ao DOS. O buffer de teclado
+  da BIOS é limpo na saída, sem executar teclas antigas no prompt.
+- Sete arquivos SC5 externos, de 27.136 bytes cada, lidos em blocos de 512 bytes.
+  Devem ficar junto do COM. Não exige FM/SCC e ainda não usa o mapper.
+- Smoke test aprovado: seis ilustrações completas na VRAM, paleta exata,
+  controles, replay, salto e `ECHO RETURN_OK` após sair de um quadro.
+- COM de 18.517 bytes, DSK de 737.280 bytes; oito arquivos extraídos e comparados
+  por SHA-256. Fontes, manifesto e ZIP final verificados.
+- Ainda sem gameplay, áudio ou validação em hardware físico. Warning 357
+  upstream permanece conhecido.
+
+Pacote anterior: `dist\Bloodstrain-1.1.5.zip`.
+Executável, imagens e DSK também estão em `dist\Bloodstrain-1.1.5`.
+
+### 1.1.6 / 1.1.7 — 2026-10-15
+
+- A 1.1.6 incorpora ZX0 v2 e cache no mapper: 20.546 bytes em disco, contra
+  189.952 bytes dos bitmaps anteriores. 14 segmentos de 16 KiB reservados via
+  DOS2, restaurados/liberados ao sair. COM da 1.1.6: 20.464 bytes.
+- Seis cartões de quatro linhas intercalados com as ilustrações, ampliando a
+  narrativa sem exigir releituras de disco ou mudar a arte.
+- Round-trip ZX0 no gerador, CRC16 por bloco no MSX, verificação do mapa de
+  link e comparação da imagem inteira na VRAM.
+- Smoke da 1.1.6 aprovado: seis imagens, cartões, paleta, replay, salto, ESC,
+  ausência de chamadas OPEN/READ após pré-carga e devolução dos 14 segmentos.
+- A 1.1.7 documenta o formato v2 e acrescenta limite medido de 1,5 s para cada
+  transição a 100% no emulador. Esse limite não inclui o boot/carga inicial.
+- Para executar, copiar somente COM e `INTRO.PAK` da mesma versão.
+  O cache exige 224 KiB livres no mapper principal. Sem áudio ou gameplay.
+- Hardware físico e HD/SD reais ainda não medidos; warning 357 da MSXgl
+  permanece conhecido.
+
+### 1.1.8 — 2026-10-15
+
+- "Madrugada de Ferrugem": trilha original em loop de 32 compassos, 136 BPM,
+  baixo/melodia/percussão PSG, guitarras e cordas FM, timbres adicionais SCC.
+- Detecção MSX-Music/YM2413 e SCC; partitura residente no COM, sem novos arquivos.
+- Diagnóstico na carga: geração do MSX, mapper principal total/livre e tiques
+  PSG/FM/SCC. A música começa após a pré-carga e continua nas transições.
+- H_TIMI preservado/restaurado; todos os chips usados silenciados ao sair.
+- Testes openMSX de PSG a 50 Hz, PSG+FM a 60 Hz e PSG+FM+SCC a 50 Hz,
+  incluindo passagem do loop, transições, cache sem disco e retorno ao DOS.
+- Música e HD/SD ainda não validados no MSX real. O criador aprovou o tempo
+  de carga da abertura 1.1.7 em FDD.
+
+### 1.1.9 — 2026-10-15
+
+- Revisão mais pesada da trilha: baixo PSG com mais ataque, bumbo duplo,
+  instrumento FM original distorcido e quintas com articulação tipo palm mute.
+- SCC com onda saturada e riffs uma oitava abaixo; melodia, 136 BPM e loop
+  preservados. Não depende de novas expansões ou arquivos externos.
+- Disco local com nome fixo `temp\bloodstrain-current.dsk`, substituído
+  somente após geração e teste bem-sucedidos quando usado `-Test`.
+
+### 1.1.10 — 2026-10-15
+
+**Bloodstrain 1.1.10 — Alexandria — Fundações e abertura**  
+Linha 1 — Raccoon City. Patch de consolidação, sem novo apelido.
+
+- Introdução em seis ilustrações originais alternadas com seis cartões de
+  texto, roteiro revisado e tela de título SCREEN 5, 256 × 212, 16 cores.
+- Imagens ZX0: 189.952 para 20.546 bytes, pré-carga em 224 KiB de mapper,
+  sem leitura de disco durante transições e replay.
+- "Madrugada de Ferrugem": trilha original heavy metal sombrio, 136 BPM,
+  PSG com guitarras FM distorcidas e camadas SCC opcionais.
+- Diagnóstico na carga com geração MSX, mapper total/livre e tiques PSG/FM/SCC.
+- README com tela de título real em destaque, início rápido e manual revisado.
+- SPACE/ENTER avança/revê, S pula ao título, ESC retorna ao DOS com os chips
+  silenciados e os segmentos de cache liberados.
+
+**Distribuição:** ZIP completo, DSK de dados de 720 KiB e manifesto SHA-256.
+O ZIP inclui manual, documentação, licenças e fontes correspondentes.
+Nenhum arquivo de DOS2, ROM de máquina ou disco privado acompanha o release.
+
+**Validação:** build/empacotamento, checksums, igualdade das ilustrações na
+VRAM, paleta, cartões, controles, replay, ausência de OPEN/READ após pré-carga,
+liberação de 14 segmentos, hook e saída funcional ao DOS no openMSX.
+Áudio PSG/FM/SCC validado em emulador; testes 50/60 Hz e loop registrados
+nos patches anteriores. Hardware físico, mixagem real e HD/SD seguem pendentes.
+
+**Limitações:** esta versão apresenta a abertura, não a campanha jogável.
+Ainda sem exploração, combate, classes, pet, inventário ou salvamento.
+Requer MSX2/MSX-DOS2 e 224 KiB livres no mapper principal; referência de 512 KiB.
+FM/SCC são opcionais; PSG é o áudio básico. Warning 357 upstream da MSXgl
+permanece conhecido e não impede o build.
+
+**Pacote atual:** `dist\Bloodstrain-1.1.10.zip`.
+Disco privado com DOS2: `temp\bloodstrain-current.dsk`, gerado separadamente
+e substituído a cada execução do gerador local. Não incluído no Git ou no release.
 
 Acrescentar próximos patches com versão, data, alterações, artefatos e testes. O pipeline gera números e arquivos, mas cabe à sessão de desenvolvimento registrar aqui o significado de cada patch.

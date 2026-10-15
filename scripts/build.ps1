@@ -75,12 +75,20 @@ try {
     Push-Location $root
     try {
         Invoke-Tool (Join-Path $root 'MSXgl\tools\build\Node\node.exe') @(
+            (Join-Path $root 'assets\art\source\intro.js')
+        )
+        Invoke-Tool (Join-Path $root 'MSXgl\tools\build\Node\node.exe') @(
             (Join-Path $root 'MSXgl\engine\script\js\build.js')
         )
     }
     finally { Pop-Location }
     if (-not (Test-Path -LiteralPath $binary)) { throw 'MSXgl nao gerou o COM.' }
     if ((Get-Item -LiteralPath $binary).Length -eq 0) { throw 'COM vazio.' }
+    $map = Get-Content -LiteralPath (Join-Path $root 'build\obj\bloodstr.map') -Raw
+    if ($map -notmatch '(?m)^\s*([0-9A-Fa-f]+)\s+s__HEAP\s*$' -or
+        [Convert]::ToInt32($Matches[1], 16) -ge 32768) {
+        throw 'Codigo e dados devem ficar abaixo de 8000h para a janela do mapper.'
+    }
 
     $stage = Join-Path $root 'build\package'
     if (Test-Path -LiteralPath $stage) {
@@ -88,6 +96,7 @@ try {
     }
     New-Item -ItemType Directory -Path $stage | Out-Null
     Copy-Item -LiteralPath $binary -Destination (Join-Path $stage 'BLOODSTR.COM')
+    Copy-Item -LiteralPath (Join-Path $root 'assets\art\export\INTRO.PAK') -Destination $stage
     foreach ($document in @('README.md', 'LICENSE', 'MANUAL.md', 'CHANGELOG.md',
         'RELEASE.md', 'THIRD_PARTY.md', 'OUTLINE.md', 'kickstart.md')) {
         Copy-Item -LiteralPath (Join-Path $root $document) -Destination $stage
@@ -98,6 +107,7 @@ try {
     $diskTool = Join-Path $root 'tools\local\msxdisk.exe'
     Invoke-Tool $diskTool @('create', $disk)
     Invoke-Tool $diskTool @('add', $disk, (Join-Path $stage 'BLOODSTR.COM'))
+    Invoke-Tool $diskTool @('add', $disk, (Join-Path $stage 'INTRO.PAK'))
     Invoke-Tool $diskTool @('list', $disk, '-l')
     if ($SmokeTest) {
         & (Join-Path $PSScriptRoot 'smoke.ps1') -PackagePath $stage `
@@ -106,6 +116,10 @@ try {
             -Destination (Join-Path $root "docs\screenshots\bloodstrain-$version-title.png")
         Copy-Item -LiteralPath (Join-Path $root 'build\smoke\dos.png') `
             -Destination (Join-Path $root "docs\screenshots\bloodstrain-$version-dos.png")
+        Copy-Item -LiteralPath (Join-Path $root 'build\smoke\card6.png') `
+            -Destination (Join-Path $root "docs\screenshots\bloodstrain-$version-card.png")
+        Copy-Item -LiteralPath (Join-Path $root 'build\smoke\loading.png') `
+            -Destination (Join-Path $root "docs\screenshots\bloodstrain-$version-loading.png")
     }
     Copy-Item -LiteralPath (Join-Path $root 'docs') -Destination $stage -Recurse
 

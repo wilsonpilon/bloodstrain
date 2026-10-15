@@ -4,11 +4,9 @@
 
 void main(void)
 {
-	Title_Show();
-
-	while (!Keyboard_IsKeyPressed(KEY_ESC))
-		Halt();
+	u8 status = Title_Show();
 
 	VDP_SetDefaultPalette();
-	BIOS_Exit(0);
+	VDP_SetLineCount(VDP_LINE_192);
+	BIOS_Exit(status);
 }

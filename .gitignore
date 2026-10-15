@@ -1,5 +1,6 @@
 /build/
 /dist/
+/temp/
 /tools/local/
 /MSXgl/projects/default_config.js
 /MSXgl/projects/template_msx2/out/

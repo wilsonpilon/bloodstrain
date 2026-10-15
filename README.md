@@ -2,9 +2,33 @@
 
 **Um bairro. Muitos caminhos.**
 
+![Tela de título de Bloodstrain 1.1.10](docs/screenshots/bloodstrain-1.1.10-title.png)
+
+**1.1.10 — Alexandria — Fundações e abertura**  
+Linha 1: **Raccoon City**. Patch do ciclo Alexandria, sem novo apelido.
+
+[Baixar release](https://github.com/wilsonpilon/bloodstrain/releases/tag/v1.1.10)
+· [Manual do jogo](MANUAL.md) · [Notas da versão](RELEASE.md#1110--2026-10-15)
+
 Adventure de ação com elementos de RPG para **MSX2 / MSX-DOS 2**, ambientado em um único bairro de São Paulo. Exploração, relações com facções, escolhas e um pet que evolui com o protagonista são o centro da proposta.
 
-> **Estado atual: fundação técnica, versão 1.1.4.** A execução mostra apenas uma abertura colorida com o nome do jogo e permite retornar ao DOS com ESC. Não há gameplay, sprites próprios ou áudio nesta versão. A fundação foi numerada 1.1.1 por escolha do criador; os patches seguintes corrigiram a saída ao DOS e reforçaram as ferramentas e testes. Esses números não significam que a campanha esteja pronta.
+> **Estado atual: abertura narrativa, versão 1.1.10.** Tela ilustrada de
+> título e seis quadros alternados com cartões de texto, arte original e avanço manual.
+> Imagens comprimidas com ZX0 e carregadas uma vez na RAM mapper.
+> Trilha original PSG com camadas opcionais FM/SCC e diagnóstico na carga.
+> SPACE/ENTER avança, S pula ao título e ESC retorna ao DOS. Ainda não há gameplay.
+> A numeração não significa que a campanha esteja pronta.
+
+## Jogar esta versão
+
+1. Baixe e extraia `Bloodstrain-1.1.10.zip` no release acima.
+2. Inicie seu MSX-DOS 2 e mantenha `BLOODSTR.COM` e `INTRO.PAK` juntos.
+3. Execute `BLOODSTR`. **SPACE/ENTER** inicia e avança a introdução;
+   **S** volta ao título e **ESC** retorna ao DOS.
+
+O DSK público contém somente o jogo, **sem DOS2 e sem boot automático**.
+A tela de título ilustrada é o ponto de entrada; por enquanto permite ver
+e rever a introdução, não iniciar uma campanha jogável.
 
 ## O jogo que queremos construir
 
@@ -18,11 +42,18 @@ Adventure de ação com elementos de RPG para **MSX2 / MSX-DOS 2**, ambientado e
 
 ### Roteiro — premissa confirmada
 
-A história se passa em um bairro de São Paulo, com presença de zumbis e facções. O protagonista e seu pet atravessam locais que poderão ser revisitados, interagem com aliados e adversários e seguem caminhos diferentes até o confronto com um chefe final.
+A história se passa na Mooca, em uma São Paulo ficcional entre 1982 e 1984.
+Uma viajante retorna do Sudeste Asiático após uma mordida; uma falha nas obras
+do hospital leva a contaminação à água do bairro. Alheia ao surto, uma jovem
+metaleira que joga Atari e programa em seu MSX1 se prepara para ir ao mercado.
 
-**Ainda não registrado:** nome do bairro, causa da crise, classes, identidade da aliada e do chefe, objetivos, eventos e finais. O criador já possui ideias e roteiro, mas eles ainda não foram transcritos para o projeto. Não preencher essas lacunas como se fossem decisões aprovadas.
+**Ainda não registrado:** classes, identidade da aliada e do chefe, regras do
+pet, objetivos posteriores à ida ao mercado e finais. Não preencher essas
+lacunas como se fossem decisões aprovadas.
 
-O roteiro detalhado ficará em [docs/story](docs/story/). Este resumo será atualizado a partir das decisões aprovadas, evitando spoilers desnecessários no material para jogadores.
+A introdução revisada e o storyboard estão em [docs/roteiro.md](docs/roteiro.md);
+o [TXT original](docs/roteiro.txt) foi preservado. As instituições e o acidente
+são elementos ficcionais, não relatos de ocorrências reais.
 
 ## Comece por aqui
 
@@ -42,9 +73,9 @@ O roteiro detalhado ficará em [docs/story](docs/story/). Este resumo será atua
 |---|---|
 | Computador | MSX2, Z80, V9938 ou compatível |
 | Sistema | MSX-DOS 2 |
-| RAM | Máquina de referência com 512 KiB; uso do mapper ainda não implementado |
-| Vídeo atual | SCREEN 5, área desenhada de 256 × 192; modo de 212 linhas a avaliar |
-| Áudio planejado | SCC / MSX-Music (FM) e PSG; nenhum exigido pela abertura |
+| RAM | 512 KiB mapper; introdução reserva 224 KiB livres no mapper principal |
+| Vídeo atual | SCREEN 5, 256 × 212, 16 cores de paleta própria |
+| Áudio atual | PSG; MSX-Music/YM2413 (FM) e SCC detectados e usados como camadas opcionais |
 | Desenvolvimento | C, SDCC e MSXgl; scripts Windows PowerShell |
 
 A capacidade de VRAM da máquina real ainda precisa ser confirmada. O jogo completo será orçado depois da primeira fatia jogável.
@@ -67,7 +98,9 @@ bloodstrain\
 .\build.bat
 ```
 
-Ou execute a tarefa **Bloodstrain: build e pacote** no Visual Studio Code. O script usa o Node e o SDCC da MSXgl, compila os módulos, monta o startup Z80, liga, converte IHX para COM, cria um DSK com msxDiskUtil e gera o ZIP.
+Ou execute a tarefa **Bloodstrain: build e pacote** no Visual Studio Code. O script usa o Node e o SDCC da MSXgl, gera as ilustrações, compila os módulos,
+monta o startup Z80, liga, converte IHX para COM, cria um DSK com msxDiskUtil e
+gera o ZIP.
 
 Para também validar a execução com openMSX e capturar screenshots, forneça sua mídia de sistema local:
 
@@ -85,6 +118,7 @@ Saídas:
 dist\
   Bloodstrain-X.Y.Z\
     BLOODSTR.COM
+    INTRO.PAK
     Bloodstrain-X.Y.Z.dsk
     README.md, MANUAL.md, LICENSE, CHANGELOG.md, RELEASE.md
     THIRD_PARTY.md, OUTLINE.md, kickstart.md, licenses\
@@ -94,6 +128,27 @@ dist\
 ```
 
 **O DSK é um disco de dados, não um disco de boot.** Não contém MSXDOS2.SYS nem COMMAND2.COM. Inicie seu próprio MSX-DOS 2 e execute `BLOODSTR` a partir da unidade do jogo. Veja o [manual](MANUAL.md).
+
+Mantenha o COM e `INTRO.PAK` da mesma versão na mesma pasta e execute o jogo
+a partir dela. O pacote comprimido ocupa 20.546 bytes, contra 189.952 bytes
+dos sete SC5 anteriores (89,2% menos). A carga e a descompressão acontecem uma
+vez; as imagens ficam em 14 segmentos DOS2 de 16 KiB, sem releitura do disco
+nas transições ou no replay. Não exige FM nem SCC.
+
+A trilha original **Madrugada de Ferrugem** combina riffs de heavy metal e
+clima de terror B dos anos 1980: 136 BPM, 32 compassos, loop de aproximadamente
+56 segundos. PSG toca baixo, melodia e bateria sintetizada; FM acrescenta
+guitarras em quintas e cordas, SCC acrescenta timbres ásperos e uma voz aguda.
+Começa somente após a pré-carga, continua entre título, ilustrações e cartões,
+e é silenciada ao sair. Não há arquivo musical externo: partitura e instrumentos
+estão no COM. O andamento é ajustado para vídeo de 50/60 Hz.
+
+Na 1.1.9, o arranjo ganha bumbo duplo, guitarra FM original com alto feedback
+e riffs SCC graves com onda saturada e articulação curta.
+
+A tela de carga mostra a geração do MSX, capacidade e RAM livre do mapper
+principal antes da reserva do cache, e caixas com tique para PSG, FM e SCC.
+PSG é padrão obrigatório do MSX; FM significa MSX-Music/YM2413 (não MSX-Audio).
 
 O ZIP contém os fontes correspondentes do jogo e da biblioteca vinculada em `SOURCE.zip`. Para reconstruir esses fontes, restaure as ferramentas da distribuição MSXgl; compiladores e ROMs de emulador não são redistribuídos no pacote.
 
@@ -112,9 +167,15 @@ O ZIP contém os fontes correspondentes do jogo e da biblioteca vinculada em `SO
 
 ## Screenshots
 
-![Abertura de Bloodstrain 1.1.4](docs/screenshots/bloodstrain-1.1.4-title.png)
+![Diagnóstico durante a carga de Bloodstrain 1.1.10](docs/screenshots/bloodstrain-1.1.10-loading.png)
 
-Captura real no openMSX 21.0, Philips NMS 8255, V9938/128 KiB de VRAM, mapper externo de 512 KiB e cartucho DOS 2. Veja [os registros de captura](docs/screenshots/README.md). A screenshot não comprova funcionamento em hardware físico.
+O destaque no topo é a tela de título, também exibida ao terminar a introdução.
+Capturas reais da versão 1.1.10 no openMSX 21.0, Philips NMS 8255, DOS2 e mapper
+externo de 512 KiB. O [storyboard completo](assets/art/export/storyboard.png)
+mostra as seis cenas e o título, como prévia gerada, não screenshot.
+O smoke test salva as ilustrações e os cartões reais em `build/smoke`.
+Veja [os registros de captura](docs/screenshots/). Testes em emulador não
+comprovam funcionamento em hardware físico.
 
 ## Créditos
 
@@ -125,7 +186,13 @@ Captura real no openMSX 21.0, Philips NMS 8255, V9938/128 KiB de VRAM, mapper ex
 - **Visual Studio Code:** Microsoft e colaboradores. [Projeto](https://code.visualstudio.com/).
 - **msxDiskUtil:** Arnold Metselaar (utilitários originais); Wilson “Barney” Pilon (adaptação e projeto atual). A versão local é uma reescrita em PureBasic, GPLv3; ver [documentação da ferramenta](msxDiskUtil/README.md).
 - **openMSX:** equipe e colaboradores, emulador para validação. [Projeto](https://openmsx.org/).
-- **Arte e áudio próprios:** ainda não produzidos; registrar autoria e origem quando forem adicionados.
+- **Arte da abertura:** ilustrações e lettering originais produzidos com
+  assistência do Copilot, a partir do roteiro e direção do criador; fonte
+  editável em [intro.js](assets/art/source/intro.js), GPL-3.0-only.
+  Não foram usados desenhos ou músicas de filmes ou outros jogos.
+- **Trilha da abertura:** “Madrugada de Ferrugem”, composição e arranjos
+  originais assistidos pelo Copilot, com PSG e camadas opcionais FM/SCC;
+  partitura em [intro_music.c](src/audio/intro_music.c), GPL-3.0-only.
 
 Nomes de lugares ou personagens usados como apelidos de releases são referências culturais, não indicação de vínculo ou endosso. Não serão reutilizadas músicas, imagens, logotipos ou textos dessas obras.
 

@@ -25,6 +25,15 @@ foreach ($file in @('BLOODSTR.COM', "Bloodstrain-$version.dsk", 'README.md',
     }
 }
 $disk = Join-Path $package "Bloodstrain-$version.dsk"
+$gameFiles = @('BLOODSTR.COM', 'INTRO.PAK')
+foreach ($file in $gameFiles) {
+    $filePath = Join-Path $package $file
+    if (-not (Test-Path -LiteralPath $filePath)) { throw "Recurso obrigatorio ausente: $file" }
+    if ($file -eq 'INTRO.PAK' -and
+        (Get-Sha256 $filePath) -ne (Get-Sha256 (Join-Path $root 'assets\art\export\INTRO.PAK'))) {
+        throw 'Pacote de imagens difere da exportacao validada.'
+    }
+}
 if ((Get-Item -LiteralPath $disk).Length -ne 737280) {
     throw 'DSK nao tem os 720 KiB esperados.'
 }
@@ -32,13 +41,15 @@ $scratch = Join-Path $root 'build\verify-extract'
 if (Test-Path -LiteralPath $scratch) { throw 'build\verify-extract ja existe; inspecione antes de repetir.' }
 New-Item -ItemType Directory -Path $scratch | Out-Null
 try {
-    & (Join-Path $root 'tools\local\msxdisk.exe') extract $disk -d $scratch 'BLOODSTR.COM'
-    if ($LASTEXITCODE -ne 0) { throw 'Falha ao extrair COM do DSK.' }
+    & (Join-Path $root 'tools\local\msxdisk.exe') extract $disk -d $scratch @gameFiles
+    if ($LASTEXITCODE -ne 0) { throw 'Falha ao extrair arquivos do DSK.' }
     $extracted = @(Get-ChildItem -LiteralPath $scratch -File)
-    if ($extracted.Count -ne 1) { throw 'Esperado exatamente um COM extraido.' }
-    $originalHash = Get-Sha256 (Join-Path $package 'BLOODSTR.COM')
-    if ((Get-Sha256 $extracted.FullName) -ne $originalHash) {
-        throw 'COM no DSK difere do COM compilado.'
+    if ($extracted.Count -ne $gameFiles.Count) { throw 'Quantidade incorreta de arquivos extraidos.' }
+    foreach ($file in $gameFiles) {
+        $originalHash = Get-Sha256 (Join-Path $package $file)
+        if ((Get-Sha256 (Join-Path $scratch $file)) -ne $originalHash) {
+            throw "Arquivo no DSK difere do original: $file"
+        }
     }
 }
 finally { Remove-Item -LiteralPath $scratch -Recurse }
@@ -55,8 +66,15 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip = [IO.Compression.ZipFile]::OpenRead((Join-Path $package 'SOURCE.zip'))
 try {
     foreach ($entry in @('src/main.c', 'src/ui/title.c', 'scripts/build.ps1',
-        'LICENSE', 'MSXgl/LICENSE.md', 'MSXgl/engine/src/crt0/crt0_dos.asm')) {
+        'LICENSE', 'MSXgl/LICENSE.md', 'MSXgl/engine/src/crt0/crt0_dos.asm',
+        'assets/art/source/intro.js', 'docs/roteiro.md',
+        'src/audio/intro_music.c', 'include/audio/intro_music.h', 'MANUAL.md')) {
         if ($null -eq $zip.GetEntry($entry)) { throw "Fonte ausente no SOURCE.zip: $entry" }
+    }
+    foreach ($file in @('INTRO.PAK', 'TITLE.SC5') + @(1..6 | ForEach-Object { "INTRO$_.SC5" })) {
+        if ($null -eq $zip.GetEntry("assets/art/export/$file")) {
+            throw "Bitmap ausente no SOURCE.zip: $file"
+        }
     }
 }
 finally { $zip.Dispose() }
