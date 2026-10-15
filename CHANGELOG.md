@@ -4,7 +4,94 @@ Resumo das alterações para usuários. Detalhes técnicos e política de versõ
 
 ## Em desenvolvimento
 
-Nenhum recurso de gameplay está anunciado como concluído.
+Campanha, interações, inventário, combate e salvamento ainda pendentes.
+
+## 1.1.17 — Alexandria — Fundações e abertura
+
+- Release público consolidando os protótipos locais 1.1.11–1.1.16.
+- Cinco áreas conectadas, cenário sombrio do bairro e protagonista rocker
+  de 16 × 32 pixels, com braços e pernas animados nas quatro direções.
+- M abre a quadra no título; setas movimentam; ESC retorna ao título.
+  Abertura, trilha PSG/FM/SCC e saída ao DOS preservadas.
+- Manual, instruções de distribuição, notas e capturas atualizados.
+- ZIP com fontes/licenças, DSK de dados e manifesto SHA-256; sem DOS2,
+  ROMs, imagens de referência ou disco privado.
+- Campanha, interações, combate, inventário e salvamento ainda pendentes;
+  hardware físico e HD/SD reais ainda não certificados.
+
+## 1.1.16 — Balanço dos braços (local)
+
+- Braços alternam avanço e recuo com maior amplitude nas quatro direções.
+- Visual rocker, proporções, colisão e limite de quatro sprites por linha
+  preservados; nenhum comando novo.
+- Gerador verifica três máscaras distintas dos braços por direção; teste
+  no emulador verifica também a mudança da camada superior de pele ao andar.
+
+## 1.1.15 — Nova referência rocker (local)
+
+- Protagonista redesenhada em 16 × 32 pixels: cabelo castanho solto, óculos,
+  camiseta preta com estampa vermelha/clara, braços expostos, pulseiras,
+  jeans cinza e botas; sem a jaqueta da versão anterior.
+- Adaptação original da nova referência à exploração em quatro direções,
+  mantendo caminhada e repouso, sem acrescentar corrida, salto ou combate.
+- Quatro camadas de cor por linha: oito sprites em dois blocos verticais,
+  consumindo quatro dos oito sprites por linha do MSX2.
+- 1.664 bytes de padrões únicos, comprimidos com ZX0 no executável e
+  descomprimidos uma vez ao abrir o mapa; 128 bytes de cores compartilhadas.
+- Teste verifica padrões/cores na VRAM, caminhada/repouso e limite de
+  quatro sprites por linha nas capturas, além do percurso pelas cinco áreas.
+- Paleta, mapa e colisão pelos pés preservados.
+
+## 1.1.14 — Proporções e caminhada (local)
+
+- Cabeça menor, rosto mais estreito, ombros delicados, cintura marcada
+  e pernas mais longas, preservando cabelo, óculos e visual rocker.
+- Três poses por direção em um ciclo de quatro tempos: neutra, passada
+  esquerda, neutra, passada direita, com braços alternados.
+- Animação guiada pela distância percorrida e retorno à pose neutra ao
+  parar ou colidir; velocidade e pegada dos pés preservadas.
+- Padrões repetidos compartilhados entre poses para caber no MSX2.
+- Smoke verifica três poses distintas em movimento e estabilidade em repouso.
+
+## 1.1.13 — Protagonista rocker (local)
+
+- Sprite original de 16 × 24 pixels inspirado na referência fornecida:
+  cabelos castanhos até os ombros, óculos, jaqueta escura com detalhes
+  metálicos, jeans e botas; silhueta feminina sem perder legibilidade.
+- Quatro direções e duas fases de caminhada, com seis sprites de hardware
+  organizados em dois blocos de altura: apenas três sprites por linha.
+- Cores compartilhadas entre as animações, sem mudar a paleta do mapa.
+  Colisão pelos pés, velocidade e conexões preservadas.
+- Folha de poses e ampliação reproduzíveis; teste compara padrões e cores
+  da protagonista na VRAM com a exportação original.
+- A fotografia não é embutida no jogo nem nos pacotes.
+
+## 1.1.12 — Visual mais sombrio (local)
+
+- Cinco cenários com paleta mais escura: cinzas azulados, verdes fechados,
+  vinho/ferrugem e destaques amarelados, substituindo o aspecto pastel.
+- Sombras sob fachadas, paredes internas e prateleiras; menos brilho nas
+  telhas, calçadas, pisos e embalagens.
+- Placas internas e referências ajustadas para leitura nos fundos escuros;
+  protagonista e interface preservam contraste.
+- Mesmos mapas, colisões, portas e controles; abertura e música inalteradas.
+- WORLD.PAK passa a 2.787 bytes. Disco de teste local atualizado, sem
+  publicação automática no GitHub.
+
+## 1.1.11 — Protótipo local
+
+- Cinco telas originais em visão superior: acesso à Criciumal, quadra do
+  mercado/farmácia, viela/teatro e os dois interiores comerciais.
+- Protagonista provisória com sprites de hardware, caminhada em quatro
+  direções, colisão pelos pés e transições pelas portas/bordas.
+- Duas entradas conectadas no mercado; continuações não construídas
+  sinalizadas e nenhuma passagem ao sul.
+- M abre o teste, setas andam e ESC volta ao título. A campanha continuará
+  planejada para começar no quarto; ainda sem inventário, combate ou pet.
+- WORLD.PAK com cinco fundos ZX0 (2.536 bytes), CRC16 e carga por área.
+- Introdução e música preservadas; música silenciada durante o mapa.
+- Teste automatizado com teclas reais, sem teletransporte da personagem.
+- Build local do ciclo Alexandria, sem novo apelido ou publicação automática.
 
 ## 1.1.10 — Patch — 2026-10-15
 

@@ -8,7 +8,8 @@ param(
     [string]$Machine = 'Philips_NMS_8255',
     [string[]]$SoundExtensions = @(),
     [ValidateRange(0, 80)][int]$MusicSeconds = 0,
-    [ValidateSet(0, 50, 60)][int]$VideoHz = 0
+    [ValidateSet(0, 50, 60)][int]$VideoHz = 0,
+    [switch]$BlockTest
 )
 
 $ErrorActionPreference = 'Stop'
@@ -64,13 +65,16 @@ $extensions = @()
 if ($SoundExtensions.Count) { $extensions += @('-ext', 'slotexpander') }
 foreach ($extension in $SoundExtensions) { $extensions += @('-ext', $extension) }
 try {
+    $script = if ($BlockTest) { 'tests\openmsx_block.tcl' } else { 'tests\openmsx_smoke.tcl' }
     & $Emulator -machine $Machine @extensions -ext ram512k -ext msxdos2 `
-        -diska $boot -diskb $disk -script (Join-Path $root 'tests\openmsx_smoke.tcl') | Out-Host
+        -diska $boot -diskb $disk -script (Join-Path $root $script) | Out-Host
     if ($LASTEXITCODE -ne 0) { throw "Emulador terminou com codigo $LASTEXITCODE." }
-    $result = Get-Content -LiteralPath (Join-Path $output 'result.txt') -Raw
+    $resultFile = if ($BlockTest) { 'block-result.txt' } else { 'result.txt' }
+    $result = Get-Content -LiteralPath (Join-Path $output $resultFile) -Raw
     if (-not $result.StartsWith('PASS:')) { throw $result }
     Add-Type -AssemblyName System.Drawing
-    foreach ($name in @('title') + @(1..6 | ForEach-Object { "intro$_" })) {
+    $captures = if ($BlockTest) { @('block-center','block-market','block-pharmacy','block-east','block-west') } else { @('title') + @(1..6 | ForEach-Object { "intro$_" }) }
+    foreach ($name in $captures) {
         $image = [Drawing.Bitmap]::FromFile((Join-Path $output "$name.png"))
         try {
             if ($image.Width -ne 320 -or $image.Height -ne 240) {

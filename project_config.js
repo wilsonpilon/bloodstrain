@@ -2,7 +2,7 @@
 const path = require("path");
 
 ProjName = "bloodstr"; // MSX-DOS 8.3 filename.
-ProjModules = ["src/main", "src/ui/title", "src/audio/intro_music"];
+ProjModules = ["src/main", "src/ui/title", "src/audio/intro_music", "src/world/block"];
 LibModules = ["system", "bios", "vdp", "draw", "print", "input", "memory", "dos",
     "dos_mapper", "compress/zx0", "psg", "msx-music", "scc"];
 Machine = "2";

@@ -1,14 +1,30 @@
 # Bloodstrain — manual do jogo
 
-**1.1.10 — Alexandria — Fundações e abertura**  
-Linha 1 — Raccoon City. Manual da versão demonstrativa de abertura.
+**1.1.17 — Alexandria — Fundações e abertura**  
+Linha 1 — Raccoon City. Manual da abertura e do protótipo de exploração.
 
 ## Sobre esta versão
 
-A versão **1.1.10** apresenta uma tela ilustrada de carregamento/título e uma
+A versão **1.1.17** apresenta uma tela ilustrada de carregamento/título e uma
 introdução em seis quadros com legendas, alternados com seis cartões de texto.
+Acrescenta cinco áreas conectadas para testar caminhada e colisão.
 Ainda não é possível jogar a campanha.
 As imagens são arte original em SCREEN 5, 256 × 212, com paleta própria de 16 cores.
+O mapa usa tons frios e escuros, sombras e detalhes amarelados, preservando
+a aparência de bairro bem cuidado dos anos 1980. A revisão visual não muda
+os caminhos, as colisões ou os controles.
+Na 1.1.13, a protagonista recebe cabelos castanhos, óculos, jaqueta rocker,
+jeans e botas em um sprite de 16 × 24 pixels, com quatro direções e duas
+fases de caminhada. Os pés continuam sendo a referência para colisão.
+Na 1.1.14, cabeça menor e pernas mais longas refinam as proporções; a
+caminhada alterna as duas pernas com passagem pela pose neutra e movimento
+dos braços. A personagem deixa de animar quando para ou esbarra.
+Na 1.1.15, a nova referência substitui a jaqueta por camiseta preta estampada,
+braços à mostra e pulseiras, com jeans cinza e botas. O desenho passa a
+16 × 32 pixels para dar espaço ao cabelo e às proporções, sem mudar a
+pegada dos pés. Corrida, salto e golpes da referência ainda não são comandos.
+Na 1.1.16, avanço e recuo dos braços ficam mais evidentes durante as passadas
+nas quatro direções, preservando a aparência, a velocidade e os controles.
 
 ## A história
 
@@ -18,9 +34,9 @@ um hospital leva a contaminação à água do bairro. Sem saber do surto, uma jo
 metaleira se prepara para ir ao mercado antes de passar a madrugada entre
 videogames, programação e música.
 
-Nesta demonstração você acompanha o começo dessa história. Objetivos,
-combate e comandos de exploração serão acrescentados ao manual quando
-essas partes do jogo existirem.
+Nesta demonstração você acompanha o começo dessa história e pode testar uma
+quadra separada. A campanha definitiva começará no quarto da protagonista,
+não na rua. Objetivos e combate ainda não estão implementados.
 
 ## Requisitos
 
@@ -35,7 +51,7 @@ essas partes do jogo existirem.
 ## Executar no computador
 
 1. Inicie seu MSX-DOS 2.
-2. Copie `BLOODSTR.COM` e `INTRO.PAK` para
+2. Copie `BLOODSTR.COM`, `INTRO.PAK` e `WORLD.PAK` para
    a **mesma pasta**. Execute a partir dessa pasta/unidade; não copie só o COM.
 3. No prompt, entre nessa pasta/unidade e digite:
 
@@ -74,7 +90,7 @@ O script usa o pacote da versão atual, cria o disco de 720 KiB
 O nome é fixo: cada execução substitui o disco anterior, sem recompilar nem
 aumentar a versão. A substituição ocorre somente após a geração e, com
 `-Test`, a validação bem-sucedidas, preservando o disco anterior em caso de falha.
-O disco contém `MSXDOS2.SYS`, `COMMAND2.COM`, o COM, `INTRO.PAK` e um
+O disco contém `MSXDOS2.SYS`, `COMMAND2.COM`, o COM, `INTRO.PAK`, `WORLD.PAK` e um
 `AUTOEXEC.BAT` que inicia o jogo automaticamente. Para selecionar outro pacote,
 use `-PackagePath`. Sem `-Test`, apenas cria o disco.
 
@@ -91,11 +107,33 @@ versão; a presença do DOS na MSXgl não estabelece permissão de redistribuiç
 | SPACE ou ENTER | Inicia a introdução e avança uma ilustração ou cartão de texto |
 | S | Pula a introdução e mostra o título |
 | SPACE ou ENTER no título final | Revê a introdução |
-| ESC | Retorna ao MSX-DOS, inclusive durante a leitura dos quadros |
+| M no título | Abre o protótipo da quadra |
+| Setas no mapa | Caminha em quatro direções |
+| ESC no mapa | Retorna ao título e recarrega a abertura |
+| ESC na abertura | Retorna ao MSX-DOS, inclusive durante a leitura dos quadros |
 
 As legendas aguardam o jogador: não há avanço automático. Solte a tecla entre
 avanços. Durante a leitura de um arquivo, aguarde o carregamento terminar.
-Não há comando de “iniciar jogo”, seleção de classe ou suporte a joystick nesta versão.
+Não há campanha, seleção de classe ou suporte a joystick nesta versão.
+
+### Explorar a quadra
+
+Pressione **M** após a carga. Você começa diante do mercadinho na Rua do
+Oratório, com a farmácia em frente. Atravesse as portas para entrar e sair;
+não é preciso apertar um botão. Caminhe pelas bordas esquerda/direita para
+trocar de tela. Mesas, prateleiras, fachadas, postes e outros obstáculos
+bloqueiam os pés da personagem.
+
+- **Oeste:** acesso à Rua Criciumal, em direção à casa.
+- **Centro:** mercadinho e farmácia, ambos com interior visitável.
+- **Leste:** viela com entrada secundária do mercado, acesso ao teatro ao
+  norte e indicação da delegacia a leste.
+- **Sul:** limite fechado, sem ligação com outra rua.
+
+As continuações para casa, teatro e delegacia ainda não levam a novas áreas:
+a interface avisa “CONTINUACAO FORA DESTA DEMO”. A arte e o sprite são
+provisórios. Não há itens coletáveis, NPCs, combate ou estados persistentes.
+O mapa fica silencioso; a música volta com a abertura ao sair pelo ESC.
 
 ## Conteúdo esperado na tela
 
@@ -148,11 +186,15 @@ A partitura e os timbres ficam no executável, sem carga extra durante a intro.
   SPACE/ENTER ou ESC para retornar ao DOS. Não há substituição silenciosa da arte.
 - **RAM mapper insuficiente:** libere pelo menos 14 segmentos de 16 KiB
   (224 KiB) no mapper principal e use uma configuração DOS2 com 512 KiB.
+- **Erro WORLD.PAK:** mantenha o arquivo junto do COM da mesma versão.
+  A leitura verifica tamanho e CRC16 antes de descomprimir; ESC retorna ao DOS.
 - **Falha ao compilar em outra máquina:** consulte o README; preserve a MSXgl completa e use uma pasta sem espaços no Windows.
 
 ## Recursos ainda não disponíveis
 
-Combate, exploração, escolhas, classes, pet, inventário, facções, diálogos e salvamento. As regras e controles serão documentados quando implementados.
+Campanha, combate, escolhas, classes, pet, inventário, facções, diálogos,
+estados persistentes e salvamento. A exploração disponível é apenas o teste
+de cinco áreas; suas regras serão ampliadas quando implementadas.
 
 ## Licença e suporte
 

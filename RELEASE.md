@@ -26,6 +26,17 @@ Referências podem vir de filmes, séries ou quadrinhos, dos clássicos até The
 
 ## Linha 1 — Raccoon City
 
+### 1.1.16 — Balanço dos braços (local)
+
+A caminhada recebe avanço e recuo mais visíveis dos braços nas quatro
+direções, preservando o desenho rocker de 16 × 32 pixels, os oito sprites
+em dois blocos verticais e o consumo de quatro sprites por linha.
+Sem mudanças em comandos, velocidade, colisão ou mapa.
+O gerador valida três máscaras dos braços por direção; o teste de caminhada
+confere a troca de padrões da camada superior de pele na VRAM.
+O disco privado continua sendo `temp\bloodstrain-current.dsk`.
+Esta compilação local não substitui o release público 1.1.10.
+
 Referência: cidade do universo Resident Evil. Linha inicial de construção do projeto; o nome não significa que uma grande porção da campanha já foi concluída.
 
 ### Ciclo 1.1 — Alexandria — Fundações e abertura
@@ -82,6 +93,100 @@ Não inclui compiladores, emulador, ROMs, arquivos do MSX-DOS ou o executável m
 - [ ] Atualizar guia vivo, changelog e notas de release.
 
 ## Registro de patches posteriores
+
+### 1.1.15 — Nova referência rocker (local)
+
+Adaptação original da nova folha de referência fornecida pelo criador para
+um sprite de exploração de 16 × 32 pixels. Cabelo castanho solto, óculos,
+camiseta preta com estampa vermelha/clara, braços à mostra, pulseiras, jeans
+cinza e botas. A jaqueta anterior deixa de fazer parte do desenho.
+
+Quatro direções com repouso e duas passadas, mantendo o ciclo de quatro
+tempos por distância. As poses de corrida, salto e luta da referência
+não implementam essas ações no jogo. A folha recebida não é embutida no pacote.
+
+Oito sprites de hardware em dois blocos verticais, com quatro sprites por
+scanline dos oito disponíveis no V9938; sobram quatro para outros atores na
+mesma altura, sujeitos também ao limite global de 32 sprites.
+Padrões repetidos compartilham índices: 1.664 bytes de padrões na VRAM,
+128 bytes de cores e 96 índices. Os padrões ficam comprimidos com ZX0 no
+COM e são descomprimidos uma vez antes da primeira sala; nenhum novo arquivo
+de execução. A paleta do mapa, velocidade e colisão pelos pés são preservadas.
+
+Smoke compara padrões/cores na VRAM, conta sprites por linha nas capturas
+e mantém os testes de caminhada, repouso, portas e DOS. Disco privado
+continua `temp\bloodstrain-current.dsk`; sem publicação, commit ou push automático.
+
+### 1.1.14 — Proporções e caminhada (local)
+
+Revisão a pedido do criador: cabeça e rosto menores, ombros mais estreitos,
+cintura marcada e pernas mais longas dentro dos mesmos 16 × 24 pixels.
+Mantém cabelos castanhos, óculos e roupa rocker, com uma silhueta menos
+caricata e mais delicada.
+
+Três poses por direção, reproduzidas em quatro tempos (neutra, esquerda,
+neutra, direita), com braços acompanhando as passadas. O ciclo avança por
+distância real percorrida, igualando a cadência em 50/60 Hz; parar ou
+esbarrar devolve a pose neutra. Não altera velocidade, portas ou colisões.
+Padrões idênticos são compartilhados para respeitar a memória de padrões
+do VDP e manter código/dados abaixo de 8000h.
+
+Teste compara padrões/cores na VRAM, exige três poses distintas durante
+caminhada e estabilidade do sprite ao parar, além do percurso nas cinco
+áreas. Disco privado mantém `temp\bloodstrain-current.dsk`; sem publicação,
+commit ou push automático.
+
+### 1.1.13 — Protagonista rocker (local)
+
+Desenho original de 16 × 24 pixels inspirado na referência fornecida pelo
+criador, com cabelos castanhos até os ombros, óculos e silhueta feminina.
+Jaqueta escura com lapelas/detalhes metálicos, jeans e botas substituem o
+visual do sprite provisório. Frente, costas e dois perfis, com duas fases
+de caminhada e movimento de pernas/braços.
+
+Seis sprites 16 × 16 em dois blocos de altura, três cores por linha e
+três sprites ativos por scanline. Os oito quadros usam 1.536 bytes de padrões
+e apenas 96 bytes de cores compartilhadas. Pés e colisões mantêm a mesma
+posição; não há mudança de mapa, paleta, controles ou trilha.
+
+Folhas de poses em `assets/art/export/protagonist.png` e ampliação em
+`protagonist-detail.png`, ambas reproduzíveis pelo gerador. O teste compara
+padrões e cores na VRAM. A fotografia de referência não é incorporada aos
+assets ou pacotes. Disco privado continua `temp\bloodstrain-current.dsk`.
+Sem publicação automática, commit ou push.
+
+### 1.1.12 — Visual mais sombrio (local)
+
+Revisão das cinco áreas a pedido do criador: remover o aspecto pastel e
+aproximar a ambientação do terror B dos anos 1980. Paleta de concreto/asfalto
+frio, verdes fechados, vinho/ferrugem e destaques amarelados. Sombras
+desenhadas sob fachadas, paredes internas e prateleiras, sem iluminação
+dinâmica ou custo adicional de renderização no MSX.
+
+O bairro continua bem cuidado, não destruído. Placas e referências ganham
+contraste; caminhos, portas, colisões, controles e sprites permanecem os
+mesmos. A abertura e sua trilha não foram escurecidas nem modificadas.
+WORLD.PAK ocupa 2.787 bytes; permanece SCREEN 5 com 16 cores, carga por área
+e CRC16. Disco privado de boot mantém o nome fixo
+`temp\bloodstrain-current.dsk`. Sem commit, push ou release público automático.
+
+### 1.1.11 — Protótipo local
+
+Primeira quadra explorável em SCREEN 5: três telas externas e interiores do
+mercado e da farmácia. Protagonista provisória, setas em quatro direções,
+colisão e portas principal/lateral do mercado. M abre o teste; ESC retorna
+ao título. Arte original ficcional de bairro bem cuidado no início dos anos
+1980, não uma reprodução exata do mapa geográfico.
+
+`WORLD.PAK` deve acompanhar COM e `INTRO.PAK`. As cinco imagens de 24.576 bytes
+ocupam juntas 2.536 bytes comprimidos; cada sala é lida na transição, verificada
+por CRC16 e descomprimida em duas partes. O cache e a música da abertura são
+liberados antes do mapa; voltar ao título recarrega a abertura.
+
+Mantém Raccoon City / Alexandria — Fundações e abertura como protótipo da
+fundação. Não inclui inventário, estados de objetos, combate, NPCs, pet,
+salvamento ou o quarto inicial definitivo. Não é uma nova publicação GitHub.
+Hardware físico e desempenho em HD/SD continuam pendentes.
 
 ### 1.1.2 — 2026-10-13
 
@@ -221,5 +326,48 @@ permanece conhecido e não impede o build.
 **Pacote atual:** `dist\Bloodstrain-1.1.10.zip`.
 Disco privado com DOS2: `temp\bloodstrain-current.dsk`, gerado separadamente
 e substituído a cada execução do gerador local. Não incluído no Git ou no release.
+
+### 1.1.17 — 2026-10-15
+
+**Bloodstrain 1.1.17 — Alexandria — Fundações e abertura**  
+Linha 1 — Raccoon City. Release público de consolidação dos patches locais
+1.1.11–1.1.16, sem novo apelido.
+
+- Cinco áreas conectadas em visão superior: acesso à Rua Criciumal,
+  quadra do mercado/farmácia, viela rumo ao teatro e os dois interiores.
+  Portas principal/lateral, colisões, limites e rotas futuras sinalizadas.
+- Cenário original SCREEN 5 mais sombrio: asfalto/concreto frios, verdes
+  fechados, vinho/ferrugem e sombras, mantendo o bairro bem cuidado.
+- Protagonista rocker original de 16 × 32 pixels, cabelo castanho, óculos,
+  camiseta preta estampada, pulseiras, jeans cinza e botas.
+  Quatro direções, repouso e duas passadas com braços alternados.
+- Oito sprites em dois blocos verticais: quatro sprites por linha.
+  Padrões compartilhados ocupam 1.984 bytes na VRAM, mais 128 bytes de cores;
+  padrões comprimidos com ZX0 no COM, descomprimidos ao entrar no mapa.
+- **M** abre a quadra no título, **setas** movimentam, **ESC** volta ao título;
+  ESC no título sai ao DOS. Introdução e trilha PSG/FM/SCC preservadas.
+  A música continua exclusiva à abertura; o mapa permanece sem música.
+- `WORLD.PAK` acrescenta as cinco áreas em 2.787 bytes comprimidos.
+  Mantenha `BLOODSTR.COM`, `INTRO.PAK` e `WORLD.PAK` juntos.
+
+**Distribuição:** `Bloodstrain-1.1.17.zip`, DSK de dados de 720 KiB e
+`SHA256SUMS.txt`. O ZIP contém manual, documentação, licenças e fontes
+correspondentes. Não inclui DOS2, ROMs, referências recebidas nem disco
+privado. `temp\bloodstrain-current.dsk` continua exclusivo dos testes locais.
+
+**Validação:** geradores e round-trip ZX0, build/link abaixo de 8000h,
+extração/hash do DSK, fontes e checksums. Testes openMSX da abertura,
+cache, áudio, controles, liberação do mapper e retorno funcional ao DOS.
+Navegação real por teclado nas cinco áreas, portas principal/lateral,
+obstáculos, limites, padrões/cores na VRAM, três poses de caminhada,
+movimento da camada dos braços e estabilidade em repouso.
+Os patches locais foram testados em 50/60 Hz; testes em hardware físico,
+mixagem real e HD/SD continuam pendentes. Warning 357 upstream conhecido.
+
+**Limitações:** protótipo de exploração, não a campanha.
+Sem interações, combate, inventário, pet ou salvamento. O começo definitivo
+será no quarto da protagonista; esta versão começa na rua para testes.
+Requer MSX2/MSX-DOS2 e 224 KiB livres no mapper principal para a abertura;
+referência de 512 KiB. FM/SCC opcionais.
 
 Acrescentar próximos patches com versão, data, alterações, artefatos e testes. O pipeline gera números e arquivos, mas cabe à sessão de desenvolvimento registrar aqui o significado de cada patch.

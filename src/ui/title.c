@@ -22,6 +22,7 @@ typedef struct
 #define ACTION_NEXT 0
 #define ACTION_SKIP 1
 #define ACTION_EXIT 2
+#define ACTION_MAP 3
 
 static u8 g_ImageBuffer[INTRO_BUFFER_BYTES];
 static u8 g_Segments[14];
@@ -58,6 +59,7 @@ static bool ActionPressed(void)
 	return Keyboard_IsKeyPressed(KEY_SPACE) ||
 		Keyboard_IsKeyPressed(KEY_ENTER) ||
 		Keyboard_IsKeyPressed(KEY_S) ||
+		Keyboard_IsKeyPressed(KEY_M) ||
 		Keyboard_IsKeyPressed(KEY_ESC);
 }
 
@@ -71,6 +73,8 @@ static u8 WaitAction(void)
 		Halt();
 		if (Keyboard_IsKeyPressed(KEY_ESC))
 			return ACTION_EXIT;
+		if (Keyboard_IsKeyPressed(KEY_M))
+			return ACTION_MAP;
 		if (Keyboard_IsKeyPressed(KEY_S))
 			return ACTION_SKIP;
 		if (Keyboard_IsKeyPressed(KEY_SPACE) || Keyboard_IsKeyPressed(KEY_ENTER))
@@ -257,7 +261,7 @@ static void TitleCaption(const c8* prompt)
 	Text(6, 164, 10, "BLOODSTRAIN " BLOODSTRAIN_VERSION);
 	Text(6, 176, 7, "Um bairro. Muitos caminhos.");
 	Text(6, 188, 14, prompt);
-	Text(6, 201, 14, "ESC: DOS  -  CAMPANHA EM CONSTRUCAO");
+	Text(6, 201, 14, "M: MAPA DE TESTE  ESC: DOS");
 	VDP_CommandWait();
 	VDP_EnableDisplay(TRUE);
 }
@@ -285,6 +289,8 @@ u8 Title_Show(void)
 	action = WaitAction();
 	while (action != ACTION_EXIT)
 	{
+		if (action == ACTION_MAP)
+			return Finish(TITLE_MAP);
 		if (action == ACTION_NEXT)
 		{
 			for (index = 0; index < INTRO_SCENE_COUNT; ++index)
@@ -307,6 +313,8 @@ u8 Title_Show(void)
 			}
 			if (action == ACTION_EXIT)
 				break;
+			if (action == ACTION_MAP)
+				return Finish(TITLE_MAP);
 		}
 		ShowImage(6);
 		TitleCaption("SPACE/ENTER: REVER INTRO");

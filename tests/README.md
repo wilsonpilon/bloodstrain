@@ -4,8 +4,8 @@ O pipeline executa `scripts/verify.ps1` antes de concluir um release:
 
 - verifica arquivos obrigatórios;
 - exige DSK de 737280 bytes;
-- extrai COM e INTRO.PAK do DSK e compara SHA-256;
-- confere INTRO.PAK contra a exportação validada;
+- extrai COM, INTRO.PAK e WORLD.PAK do DSK e compara SHA-256;
+- confere os pacotes de arte contra as exportações validadas;
 - exige que o fim de código/dados no mapa de link fique abaixo de 0x8000,
   deixando a página 2 livre para a janela de mapper;
 - verifica o manifesto de checksums;
@@ -55,8 +55,28 @@ Para verificar arte, paleta, legendas e previews sem recompilar:
 .\MSXgl\tools\build\Node\node.exe .\assets\art\source\intro.js --check
 ```
 
-Testes de gameplay ainda não existem. Hardware físico e configurações alternativas
-devem ser registrados separadamente em OUTLINE; testes de áudio 50/60 Hz abaixo.
+Hardware físico e configurações alternativas devem ser registrados
+separadamente em OUTLINE; testes de áudio 50/60 Hz abaixo.
+
+## Quadra explorável (1.1.11 local)
+
+```powershell
+.\MSXgl\tools\build\Node\node.exe .\assets\art\source\block.js --check
+.\scripts\smoke.ps1 -PackagePath .\dist\Bloodstrain-1.1.11 -DosFilesPath .\MSXgl\tools\build\DOS -BootTemplatePath .\msxDiskUtil\msxdos.dsk -BlockTest
+```
+
+O gerador verifica round-trip ZX0, spawns com a mesma pegada dos pés do runtime,
+conectividade por pixel e chegadas fora das portas de retorno.
+O smoke abre o mapa com M e usa somente teclas de direção, sem escrever
+posições no estado do jogo. Percorre cinco áreas, portas principal/lateral do
+mercado, farmácia, retornos, obstáculos e limites oeste/sul. Retorna pelo título
+ao DOS e exige resposta a `ECHO BLOCK_OK`. Capturas e rastreamento das ações
+ficam em `build/smoke/block-*`.
+
+As posições são lidas da RAM física após identificar o segmento do aplicativo:
+ler apenas `memory` durante chamadas BIOS/DOS pode observar outro slot e gerar
+falsas transições. O teste padrão de intro continua separado e ambos fazem
+parte do build com `-SmokeTest`.
 
 ## Áudio e diagnóstico (1.1.8)
 

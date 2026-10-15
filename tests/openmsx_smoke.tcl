@@ -50,6 +50,10 @@ proc mapper_free {} {
         set low [debug read memory $::mapper_pointer]
         set high [debug read memory [expr {$::mapper_pointer+1}]]
         set ::mapper_table [expr {$low+256*$high}]
+        if {$::mapper_table < 0xC000 || $::mapper_table > 0xFFF0} {
+            unset ::mapper_table
+            return -1
+        }
     }
     # The BIOS temporarily maps a different page 3 during the music interrupt.
     # Pin the DOS table's physical address while foreground loading is active.
@@ -255,7 +259,8 @@ proc advance_frame {} {
 proc await_dos {} {
     set r0 [debug read "VDP regs" 0]
     set r1 [debug read "VDP regs" 1]
-    if {($r0 & 14) == 0 && ($r1 & 24) == 16} {
+    if {($r0 & 14) == 0 && ($r1 & 88) == 80 &&
+        [string first {:\>} [debug read_block VRAM 0 960]] >= 0} {
         foreach reg {8 9 10} {
             if {[debug read "PSG regs" $reg] != 0} {
                 result "FAIL: PSG nao silenciado ao sair"
@@ -278,7 +283,7 @@ proc await_dos {} {
             return
         }
         after time 1 {type_via_keybuf "ECHO RETURN_OK\r"}
-        after time 3 dos_test
+        after time 5 dos_test
     } else {
         after time 0.1 await_dos
     }

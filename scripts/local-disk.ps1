@@ -25,7 +25,8 @@ $files = @(
     (Join-Path $dos 'MSXDOS2.SYS'),
     (Join-Path $dos 'COMMAND2.COM'),
     (Join-Path $package 'BLOODSTR.COM'),
-    (Join-Path $package 'INTRO.PAK')
+    (Join-Path $package 'INTRO.PAK'),
+    (Join-Path $package 'WORLD.PAK')
 )
 foreach ($file in $files + @($tool, (Join-Path $root 'msxDiskUtil\msxdos.dsk'))) {
     if (-not (Test-Path -LiteralPath $file -PathType Leaf)) {

@@ -2,7 +2,7 @@
 
 **Última atualização:** 2026-10-15
 **Versão fundadora:** 1.1.1 — Alexandria — Fundações e abertura  
-**Versão atual:** 1.1.10 — release consolidado da abertura do ciclo Alexandria
+**Versão atual:** 1.1.17 — consolidação pública da quadra e da protagonista rocker
 **Linha principal:** 1 — Raccoon City  
 **Fonte da versão numérica:** [version.json](version.json)
 
@@ -34,12 +34,18 @@ O criador já tem ideias e roteiro. **Não inventar nem declarar aprovado o cont
 | Entrada | ESC para retornar ao MSX-DOS; saída corrigida com `BIOS_Exit` na 1.1.2. |
 | Pipeline | Preparação, compilação, montagem, link, COM, DSK de dados, fontes correspondentes e ZIP. |
 | Documentação | Kickstart, README, guia vivo, changelog, releases, manual, licenças e créditos. |
-| Gameplay | Não implementado. |
-| Arte, animação e áudio | Sete ilustrações estáticas originais; trilha original PSG com camadas FM/SCC opcionais. Sem animação. Fonte MSXgl atribuída. |
+| Gameplay | Protótipo de cinco áreas, caminhada em quatro direções, colisão e portas. Sem campanha/interações. |
+| Arte, animação e áudio | Sete ilustrações de abertura e cinco mapas originais; protagonista 16 × 32 com repouso e duas passadas por direção, quatro sprites por linha; trilha original PSG/FM/SCC na abertura. Fonte MSXgl atribuída. |
 | Dados de campanha | Introdução em docs/roteiro.md, original TXT preservado; demais eventos ainda em aberto. |
 | Mapper e save | Cache da introdução: 14 segmentos DOS2 (224 KiB). Save ainda não implementado. |
 
 ## Passos realizados
+
+- [x] Preparar release público 1.1.17 consolidando a quadra sombria, a
+  protagonista rocker e os testes dos patches locais 1.1.11–1.1.16.
+
+- [x] Refinar a caminhada da protagonista rocker com braços alternados mais
+  visíveis nas quatro direções, preservando aparência e quatro sprites por linha.
 
 - [x] Preparar release 1.1.10 com título no README, manual do jogo e notas,
   mantendo Raccoon City / Alexandria — Fundações e abertura.
@@ -72,35 +78,33 @@ O criador já tem ideias e roteiro. **Não inventar nem declarar aprovado o cont
 
 ## Sugestões técnicas ainda não aprovadas como design definitivo
 
-- Telas fixas ou pequenas áreas em vez de bairro inteiro com rolagem contínua.
-- Cenários bitmap construídos com peças reutilizáveis.
-- Personagens com sprites de hardware, respeitando oito sprites por linha.
+- Adotados para o protótipo: visão superior, telas fixas, fundos bitmap e
+  protagonista provisória com dois sprites de hardware sobrepostos.
+- Áreas laterais especiais são uma possibilidade futura, não uma alternância
+  automática para cada item/inimigo.
 - Dados e flags para diálogos, facções e alterações persistentes no bairro.
 - Para gameplay, definir divisão entre música e efeitos; intro já usa PSG/FM/SCC.
 - Carregamento por área e uso posterior do mapper como bancos/cache.
 
 ## Próximos passos
 
-1. **Revisar com o criador a abertura implementada** e registrar classes, pet, aliada e facções. A introdução agora define o surto e a jovem que sai ao mercado.
-2. Escolher uma rua e um interior para a primeira fatia jogável.
-3. Definir tamanho do personagem, pet, área de jogo e espaço de diálogo/UI.
-4. Criar movimento, colisão e transição entre essas duas áreas.
-5. Adicionar pet básico e um único inimigo.
-6. Implementar interação, diálogo com escolha, item e inventário limitado.
-7. Persistir uma consequência ao sair e voltar; depois salvar/carregar.
-8. Produzir primeiro conjunto de arte própria, tema curto e efeitos.
-9. Medir desempenho, uso de RAM/VRAM e limites de sprites antes de expandir.
-
-**Não começar os nove passos ao mesmo tempo.** O próximo trabalho de design depende do roteiro que o criador vai fornecer.
+1. Revisar visualmente a quadra e a escala da protagonista com o criador;
+   testar o disco fixo em FDD/HD e no MSX real.
+2. Implementar uma interação simples com item e estado persistente entre salas,
+   antes de construir um editor genérico ou expandir o bairro.
+3. Conectar depois casa/quarto e a Rua Criciumal em L. **A campanha começará
+   no quarto**, apesar de o teste técnico atual começar na rua.
+4. Definir arte final da protagonista, pet, combate e uso de áudio no mapa
+   com o criador, sem inventar regras ainda não aprovadas.
 
 ## Pendências e questões abertas
 
 | ID | Pendência | Impacto |
 |---|---|---|
-| P-001 | Introdução registrada; confirmar primeira rua, mercado e continuação | Mapas, diálogos e campanha |
+| P-001 | Quadra escolhida e prototipada; falta quarto/casa para início definitivo | Mapas, diálogos e campanha |
 | P-002 | Definir classes e capacidades do pet | Interações e progressão |
 | P-003 | Confirmar modelo de MSX2, VRAM, DOS 2 e SCC | Orçamento e compatibilidade |
-| P-004 | Escolher modo de navegação e combate | Movimento, câmera e sprites |
+| P-004 | Visão superior/telas fixas adotadas; combate e áreas laterais em aberto | Movimento, câmera e sprites |
 | P-005 | Intro usa partitura C residente e PSG/FM/SCC; definir áudio de gameplay | Produção e reprodução |
 | P-006 | Confirmar nome público do criador e demais créditos | Publicação |
 | P-007 | Resolvido: Git e remoto wilsonpilon/bloodstrain presentes | Continuidade entre computadores |
@@ -112,7 +116,7 @@ O criador já tem ideias e roteiro. **Não inventar nem declarar aprovado o cont
 | ID | Tipo | Estado | Descrição |
 |---|---|---|---|
 | L-001 | Ferramenta | Aberto | Build upstream usa caminhos sem aspas; script rejeita raiz com espaços explicitamente. |
-| L-002 | Escopo | Conhecido | Abertura ilustrada sem gameplay, música, sprites de personagens ou save. |
+| L-002 | Escopo | Conhecido | Abertura e teste de caminhada; sem campanha, interações, inventário, combate, pet ou save. Música apenas na abertura. |
 | L-003 | Distribuição | Documentado | DSK de dados exige DOS 2 externo; não dá boot sozinho. |
 | L-004 | Portabilidade | Aberto | Pipeline validado inicialmente no Windows; outros sistemas ainda não certificados. |
 | B-001 | Runtime | Corrigido em 1.1.2 | Na 1.1.1, ESC chamava uma rotina BIOS diretamente em página 0 com RAM do DOS mapeada, travando a saída. Substituída por `BIOS_Exit`, que faz a transição apropriada via interslot. Reprodução: iniciar, pressionar ESC; esperado: prompt utilizável. Verificado com ECHO após sair. |
@@ -210,6 +214,81 @@ O criador considerou aceitável a carga em FDD; HD no MSX real será testado dep
   o primeiro título aguarda a pré-carga e descompressão de todas as imagens.
 - Pacotes anteriores preservados. Disco DOS2 privado é gerado em `temp`
   usando `scripts/local-disk.ps1 -Test`; pasta ignorada pelo Git.
+
+## Primeira quadra — protótipo local 1.1.11
+
+- Três exteriores: acesso oeste à Criciumal, mercado/farmácia no centro,
+  viela ao leste. Teatro ao norte e delegacia a leste são continuações
+  sinalizadas ainda não implementadas. Nenhuma saída ao sul.
+- Dois interiores: mercado com entradas principal e lateral, farmácia.
+  Bairro ficcional inspirado na geografia fornecida, bem cuidado e situado
+  no início dos anos 1980. Sem reproduzir elementos modernos do mapa.
+- M abre o teste a partir do título; setas caminham; ESC volta ao título.
+  Sprite 16×16 provisório com duas fases por direção, colisão pelos pés,
+  velocidade nominal de 100 pixels/s em 50 e 60 Hz, sem diagonais.
+- Fonte de arte e dados: `assets/art/source/block.js`. Gera bitmaps SC5,
+  previews PNG, máscaras, portas, sprites e `block_data.h`.
+- WORLD.PAK: dez blocos ZX0 v2, 2.536 bytes para 122.880 bytes de bitmap.
+  Leitura por sala, CRC16, scratch em 8000h/9000h; código/dados abaixo de
+  8000h. Ao entrar no mapa, o cache mapper e o hook musical da intro já
+  foram liberados. Voltar ao título recarrega a intro.
+- Validação host: round-trip ZX0, pegada real dos pés nos spawns/percursos,
+  alcance das portas e chegada fora dos portais para evitar retorno imediato.
+- Teste openMSX usa teclas reais e lê estado na RAM física, pois BIOS/DOS
+  remapeiam temporariamente os slots da CPU durante leituras.
+- Sem novo release público, commit ou push automático. Disco local esperado:
+  `temp\bloodstrain-current.dsk`, substituído após validação.
+
+## Revisão visual — 1.1.12 local
+
+- Criador aprovou a navegação, mas pediu remover o aspecto pastel/fofinho.
+- Paleta do mapa revisada para cinzas frios, verdes fechados e vinho/ferrugem,
+  com acentos amarelados; bairro continua bem cuidado nos anos 1980.
+- Sombras geradas nos bitmaps sob fachadas, paredes e prateleiras. Sem
+  alterações de colisão, geometria, controles ou custo de renderização.
+- Textos internos e referências claros sobre os fundos mais escuros;
+  sprites mantêm contraste. Abertura e trilha preservadas.
+- WORLD.PAK atual: 2.787 bytes; a indicação de 2.536 acima é histórica da 1.1.11.
+
+## Protagonista rocker — 1.1.13 local
+
+- Referência visual recebida: cabelos castanhos até os ombros, óculos e
+  silhueta feminina. Roupa reinterpretada como jaqueta escura, jeans e botas.
+  Fotografia não copiada aos assets/pacotes.
+- Arte original 16 × 24, quatro direções e duas fases; seis sprites em
+  dois blocos verticais, três sprites por linha, cores compartilhadas.
+- 1.536 bytes de padrões e 96 bytes de cores; tabelas VRAM 7800h/7400h.
+  Mantém colisão pelos pés e escala horizontal; altura anterior era 16.
+- Fonte no gerador `block.js`; poses e ampliação em `protagonist*.png`,
+  exportação binária em `protagonist.spr`. Smoke confere padrões/cores VRAM.
+
+## Proporções e caminhada — 1.1.14 local
+
+- Criador pediu cabeça proporcional, aspecto mais delicado e animação menos
+  travada. Cabeça reduzida, ombros estreitos, cintura e pernas mais longas.
+- Três poses por direção em ciclo neutra/esquerda/neutra/direita; braços
+  alternados. Fase por distância percorrida (ciclo de 24 pixels), não frames.
+- Repouso ao parar ou colidir; pegada, velocidade e conexões preservadas.
+- Deduplicação de tiles no gerador e tabela de índices por pose; exportação
+  binária/teste adaptados ao tamanho real dos padrões, sem preenchimento.
+- Smoke exige pelo menos três poses de hardware distintas ao caminhar e
+  atributos estáveis ao parar, com percurso completo em 50/60 Hz.
+
+## Nova referência rocker — 1.1.15 local
+
+- Desenho original 16 × 32 baseado na nova folha recebida: camiseta preta
+  estampada, braços expostos, pulseiras, jeans cinza, botas e cabelo solto.
+  Mantém óculos; retira jaqueta. Folha não incluída no pacote.
+- Quatro camadas/cores por linha; oito sprites em dois blocos verticais,
+  quatro dos oito sprites por scanline. Orçar inimigos/pet com os quatro
+  restantes e o limite global de 32, sem prometer número de atores pronto.
+- 1.664 bytes de padrões deduplicados na VRAM, 128 bytes de cores e 96 índices.
+  Padrões comprimidos ZX0 residentes no COM, descomprimidos em 9000h antes
+  da primeira sala; tabelas VRAM mantidas e scratch reutilizado pelo loader.
+- Mantém colisão dos pés, mapa, paleta e ciclo por distância. Corrida,
+  salto e luta da folha são referências futuras, não ações implementadas.
+- Smoke compara arte/VRAM e conta no máximo quatro sprites por linha nas
+  capturas; mantém caminhada, repouso, portas e retorno ao DOS.
 
 ## Rotina de encerramento — checklist
 

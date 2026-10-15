@@ -25,12 +25,12 @@ foreach ($file in @('BLOODSTR.COM', "Bloodstrain-$version.dsk", 'README.md',
     }
 }
 $disk = Join-Path $package "Bloodstrain-$version.dsk"
-$gameFiles = @('BLOODSTR.COM', 'INTRO.PAK')
+$gameFiles = @('BLOODSTR.COM', 'INTRO.PAK', 'WORLD.PAK')
 foreach ($file in $gameFiles) {
     $filePath = Join-Path $package $file
     if (-not (Test-Path -LiteralPath $filePath)) { throw "Recurso obrigatorio ausente: $file" }
-    if ($file -eq 'INTRO.PAK' -and
-        (Get-Sha256 $filePath) -ne (Get-Sha256 (Join-Path $root 'assets\art\export\INTRO.PAK'))) {
+    if ($file -in @('INTRO.PAK', 'WORLD.PAK') -and
+        (Get-Sha256 $filePath) -ne (Get-Sha256 (Join-Path $root "assets\art\export\$file"))) {
         throw 'Pacote de imagens difere da exportacao validada.'
     }
 }
@@ -68,7 +68,8 @@ try {
     foreach ($entry in @('src/main.c', 'src/ui/title.c', 'scripts/build.ps1',
         'LICENSE', 'MSXgl/LICENSE.md', 'MSXgl/engine/src/crt0/crt0_dos.asm',
         'assets/art/source/intro.js', 'docs/roteiro.md',
-        'src/audio/intro_music.c', 'include/audio/intro_music.h', 'MANUAL.md')) {
+        'src/audio/intro_music.c', 'include/audio/intro_music.h', 'MANUAL.md',
+        'src/world/block.c', 'include/world/block.h', 'assets/art/source/block.js')) {
         if ($null -eq $zip.GetEntry($entry)) { throw "Fonte ausente no SOURCE.zip: $entry" }
     }
     foreach ($file in @('INTRO.PAK', 'TITLE.SC5') + @(1..6 | ForEach-Object { "INTRO$_.SC5" })) {

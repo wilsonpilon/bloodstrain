@@ -78,6 +78,9 @@ try {
             (Join-Path $root 'assets\art\source\intro.js')
         )
         Invoke-Tool (Join-Path $root 'MSXgl\tools\build\Node\node.exe') @(
+            (Join-Path $root 'assets\art\source\block.js')
+        )
+        Invoke-Tool (Join-Path $root 'MSXgl\tools\build\Node\node.exe') @(
             (Join-Path $root 'MSXgl\engine\script\js\build.js')
         )
     }
@@ -97,6 +100,7 @@ try {
     New-Item -ItemType Directory -Path $stage | Out-Null
     Copy-Item -LiteralPath $binary -Destination (Join-Path $stage 'BLOODSTR.COM')
     Copy-Item -LiteralPath (Join-Path $root 'assets\art\export\INTRO.PAK') -Destination $stage
+    Copy-Item -LiteralPath (Join-Path $root 'assets\art\export\WORLD.PAK') -Destination $stage
     foreach ($document in @('README.md', 'LICENSE', 'MANUAL.md', 'CHANGELOG.md',
         'RELEASE.md', 'THIRD_PARTY.md', 'OUTLINE.md', 'kickstart.md')) {
         Copy-Item -LiteralPath (Join-Path $root $document) -Destination $stage
@@ -108,6 +112,7 @@ try {
     Invoke-Tool $diskTool @('create', $disk)
     Invoke-Tool $diskTool @('add', $disk, (Join-Path $stage 'BLOODSTR.COM'))
     Invoke-Tool $diskTool @('add', $disk, (Join-Path $stage 'INTRO.PAK'))
+    Invoke-Tool $diskTool @('add', $disk, (Join-Path $stage 'WORLD.PAK'))
     Invoke-Tool $diskTool @('list', $disk, '-l')
     if ($SmokeTest) {
         & (Join-Path $PSScriptRoot 'smoke.ps1') -PackagePath $stage `
@@ -120,6 +125,10 @@ try {
             -Destination (Join-Path $root "docs\screenshots\bloodstrain-$version-card.png")
         Copy-Item -LiteralPath (Join-Path $root 'build\smoke\loading.png') `
             -Destination (Join-Path $root "docs\screenshots\bloodstrain-$version-loading.png")
+        & (Join-Path $PSScriptRoot 'smoke.ps1') -PackagePath $stage `
+            -DosFilesPath $DosFilesPath -BootTemplatePath $BootTemplatePath -BlockTest
+        Copy-Item -LiteralPath (Join-Path $root 'build\smoke\block-center.png') `
+            -Destination (Join-Path $root "docs\screenshots\bloodstrain-$version-block.png")
     }
     Copy-Item -LiteralPath (Join-Path $root 'docs') -Destination $stage -Recurse
 

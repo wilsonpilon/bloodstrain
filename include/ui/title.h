@@ -3,4 +3,5 @@
 
 #include "core.h"
 
+#define TITLE_MAP 2
 u8 Title_Show(void);

@@ -4,31 +4,89 @@
 
 ![Tela de título de Bloodstrain 1.1.10](docs/screenshots/bloodstrain-1.1.10-title.png)
 
-**1.1.10 — Alexandria — Fundações e abertura**  
+**1.1.17 — Alexandria — Fundações e abertura**  
 Linha 1: **Raccoon City**. Patch do ciclo Alexandria, sem novo apelido.
 
-[Baixar release](https://github.com/wilsonpilon/bloodstrain/releases/tag/v1.1.10)
-· [Manual do jogo](MANUAL.md) · [Notas da versão](RELEASE.md#1110--2026-10-15)
+[Último release público: 1.1.17](https://github.com/wilsonpilon/bloodstrain/releases/tag/v1.1.17)
+· [Manual do jogo](MANUAL.md) · [Notas da versão](RELEASE.md#1117--2026-10-15)
 
 Adventure de ação com elementos de RPG para **MSX2 / MSX-DOS 2**, ambientado em um único bairro de São Paulo. Exploração, relações com facções, escolhas e um pet que evolui com o protagonista são o centro da proposta.
 
-> **Estado atual: abertura narrativa, versão 1.1.10.** Tela ilustrada de
+> **Estado atual: abertura narrativa e protótipo de exploração, versão 1.1.17.** Tela ilustrada de
 > título e seis quadros alternados com cartões de texto, arte original e avanço manual.
 > Imagens comprimidas com ZX0 e carregadas uma vez na RAM mapper.
 > Trilha original PSG com camadas opcionais FM/SCC e diagnóstico na carga.
-> SPACE/ENTER avança, S pula ao título e ESC retorna ao DOS. Ainda não há gameplay.
+> SPACE/ENTER avança, S pula ao título e ESC retorna ao DOS.
+> **M** abre o teste da quadra; **setas** movimentam e **ESC** volta ao título.
+> Ainda não há campanha, combate, interações ou inventário.
 > A numeração não significa que a campanha esteja pronta.
 
 ## Jogar esta versão
 
-1. Baixe e extraia `Bloodstrain-1.1.10.zip` no release acima.
-2. Inicie seu MSX-DOS 2 e mantenha `BLOODSTR.COM` e `INTRO.PAK` juntos.
+1. Baixe e extraia `Bloodstrain-1.1.17.zip` no release acima.
+2. Inicie seu MSX-DOS 2 e mantenha `BLOODSTR.COM`, `INTRO.PAK` e `WORLD.PAK` juntos.
 3. Execute `BLOODSTR`. **SPACE/ENTER** inicia e avança a introdução;
    **S** volta ao título e **ESC** retorna ao DOS.
 
 O DSK público contém somente o jogo, **sem DOS2 e sem boot automático**.
-A tela de título ilustrada é o ponto de entrada; por enquanto permite ver
-e rever a introdução, não iniciar uma campanha jogável.
+A versão 1.1.17 permite ver e rever a introdução e explorar o mapa abaixo
+pressionando **M** no título. O disco privado `temp\bloodstrain-current.dsk`
+recebe a mesma versão, com DOS2 e boot automático somente para testes locais.
+
+### Primeira quadra explorável
+
+![Quadra do mercado com a protagonista rocker](docs/screenshots/bloodstrain-1.1.17-block.png)
+
+Cinco telas fixas em visão superior: acesso à Rua Criciumal, quadra do mercado
+com a farmácia em frente, viela em direção ao teatro, interior do mercado e
+interior da farmácia. A saída leste aponta para a delegacia; os caminhos ainda
+não construídos são sinalizados e não há passagem ao sul.
+
+Arte original de um bairro ficcional bem cuidado no início dos anos 1980,
+SCREEN 5 com 192 linhas de cenário e 20 de interface, protagonista provisória
+com repouso e duas passadas por direção, obstáculos sólidos e portas conectadas.
+O mercado também é acessível pela viela. Os sprites servem para testar escala,
+movimento e colisão, não são a arte final.
+
+Na 1.1.13, a protagonista ganha um desenho original de **16 × 24 pixels**:
+cabelos castanhos até os ombros, óculos, jaqueta escura com detalhes metálicos,
+jeans e botas, inspirado na referência visual fornecida pelo criador.
+Frente, costas e perfis têm duas fases de caminhada. A silhueta mais alta
+não muda a colisão pelos pés nem as portas.
+
+Na 1.1.14, a cabeça e o rosto ficam menores, com ombros mais estreitos,
+cintura marcada e pernas mais longas, mantendo 16 × 24 pixels. A caminhada
+alterna repouso, passada esquerda, repouso e passada direita, com braços
+acompanhando o movimento. O ciclo segue a distância percorrida, não a taxa
+de vídeo; ao parar ou esbarrar, ela volta à pose neutra.
+
+Na 1.1.15, a nova referência orienta um desenho de **16 × 32 pixels**:
+camiseta preta com estampa vermelha/clara, braços à mostra, pulseiras,
+jeans cinza, botas e cabelo castanho solto. A jaqueta foi retirada.
+O desenho adapta a referência à exploração superior, sem acrescentar
+corrida, salto ou ataques. O sprite mantém quatro direções e caminhada.
+
+Na 1.1.16, os braços alternam avanço e recuo de forma mais visível,
+acompanhando as passadas nas quatro direções, sem mudar o visual aprovado.
+
+A protagonista usa oito sprites em dois blocos verticais, **quatro por linha**.
+O V9938 permite oito por linha: restam quatro para outros atores na mesma
+altura, não quatro personagens completos. Padrões compartilhados e comprimidos
+ZX0 preservam espaço no executável; a descompressão ocorre só ao abrir o mapa.
+Não muda a paleta do cenário nem a pegada de colisão.
+
+![Protagonista ampliada: frente, costas e perfis; repouso e duas passadas](assets/art/export/protagonist-detail.png)
+
+Na 1.1.12, a quadra deixa os tons pastel: concreto e asfalto frios, verdes
+fechados, telhados vinho/ferrugem e pequenos destaques amarelados. Sombras
+sob fachadas e prateleiras dão um clima mais sombrio sem arruinar o bairro
+ou esconder a personagem, as portas e as indicações.
+
+O teste começa na rua somente para desenvolver a navegação. **A campanha
+começará no quarto da protagonista.** A trilha permanece exclusiva à abertura;
+o mapa está sem música nesta etapa. Cada troca de área lê e descomprime sua
+imagem de `WORLD.PAK` (2.787 bytes para as cinco telas), sem reservar outro
+cache mapper.
 
 ## O jogo que queremos construir
 
@@ -119,6 +177,7 @@ dist\
   Bloodstrain-X.Y.Z\
     BLOODSTR.COM
     INTRO.PAK
+    WORLD.PAK
     Bloodstrain-X.Y.Z.dsk
     README.md, MANUAL.md, LICENSE, CHANGELOG.md, RELEASE.md
     THIRD_PARTY.md, OUTLINE.md, kickstart.md, licenses\
